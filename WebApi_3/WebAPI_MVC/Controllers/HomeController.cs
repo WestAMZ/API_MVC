@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebApi_3.Models;
 
 namespace WebAPI_MVC.Controllers
 {
@@ -13,8 +15,9 @@ namespace WebAPI_MVC.Controllers
         public async Task<ActionResult> Index()
         {
             var httpClient = new HttpClient();
-            var json = await httpClient.GetStringAsync("https://localhost:44347/api/Continents");
-            return View();
+            var json = await httpClient.GetStringAsync("http://localhost:44347/api/Continents");
+            List<Continent> continet_list = JsonConvert.DeserializeObject<List<Continent>>(json);
+            return View(continet_list);
         }
 
         public ActionResult About()
